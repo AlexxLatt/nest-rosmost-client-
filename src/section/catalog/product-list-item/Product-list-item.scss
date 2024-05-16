@@ -1,0 +1,26 @@
+.productListItem{
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+	border-radius: 20px;
+	height: 260px;
+	width: 220px;
+	background-color:white;
+	&__img{
+		margin-top: 40px;
+		margin-left: 25px;
+		width: 167px;
+		height: 115px;
+	}
+	&__title{
+		font-size: 14px;
+		text-align: end;
+		margin-right: 24px;
+	}
+	&__country{
+		text-align: end;
+		margin-right: 24px;
+	}
+	&__coust{
+		text-align: end;
+		margin-right: 24px;
+	}
+}
