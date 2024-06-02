@@ -1,24 +1,27 @@
+@import '../../../sass/base/variables.scss';
 .Filter{
 	&__mainWrapper{
 		margin-top: 40px;
 		display: grid;
-		grid-template-columns: 300px 400px 100px;
+		grid-template-columns: 300px 390px 200px;
 		justify-content: center;
 
 		&__inputWrapper{
 			justify-self: center;
 			align-self: center;
 			display: grid;
-			grid-template-columns: 2fr 5fr;
+			grid-template-columns: 1fr 7fr;
 			column-gap: 7px;
 			
-			&__label{
-				display: flex;
-				align-items: center;
+			&__iconSearch{
+				align-self:center;
+				justify-self: start;
 			}
 			&__input{
+				border-radius: 10px;
+				padding-left: 10px;
 				width: 180px;
-				height: 30px;
+				height: 40px;
 				margin-left: 9px;
 				background-color: white;
 				border: none;
@@ -30,27 +33,62 @@
 		
 		&__buttonWrapper{
 			justify-self: center;
-			align-self: center;
 			display: grid;
-			grid-template-columns: 1fr 1fr 1fr 1fr ;
+			grid-template-columns: 1fr 8fr;
 			column-gap: 10px;
-			&__title{
-				display: flex;
-				align-items: center;
+				
+			&__item{
+					width: 190px;
+					height: 20px;
+					box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 			}
-			&__btn{
-				width: 75px;
-				height: 30px;
-				background-color: white;
-				border: none;
-				box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-				cursor: pointer;
+			&__label{
+				justify-self: center;
+				align-self: center;
+				font-size: 20px;
+				color:black;
+				
 			}
-
+		}
+		&__profileWrapper{
+			&__clickArea{
+				padding-left: 27px;
+				display: grid;
+				grid-template-columns: 96px 50px;
+				&__name{
+					font-size: 20px;
+				}
+				&__img{}
+			}
 		}
 
 
 
 	}
 	
+}
+.dropdown-menu{
+	position: absolute;
+	z-index: 10;
+	background-color: white;
+	border: 1px solid $main-color;
+	border-radius: 10px;
+	width: 164px;
+	height: 150px;
+	transition: all 0.3s;
+	align-items:center;
+	&__item{
+		list-style-type: none;
+		display: flex;
+		justify-content: space-between;
+		cursor: pointer;
+		margin-top: 10px;
+		img{
+			padding-left: 34px;
+		}
+		div{
+			width: 95px;
+			font-weight: bold;
+		}
+	}
 }

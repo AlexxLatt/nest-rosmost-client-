@@ -18,7 +18,8 @@ class App extends Component {
       showLoginForm: false,
       email: "",
       password: "",
-      username: ""
+      username: "",
+      token : ""
     };
   }
   
@@ -49,6 +50,11 @@ class App extends Component {
       }
       });
       if (response.status === 201) {
+        console.log(response);
+        const token = response.data.user.token; // Получаем токен из ответа
+        const username = response.data.user.username;
+        localStorage.setItem('token', token); // Сохраняем токен в localStorage
+        localStorage.setItem('username', username);
         // Перенаправление на страницу каталога после успешной регистрации
         window.location.href = "/catolog.html";
       } else {
@@ -105,7 +111,11 @@ class App extends Component {
         }
       });
       if (response.status === 201 || response.status === 200) {
-        // Перенаправление на страницу каталога после успешного входа
+        console.log(response);
+        const username = response.data.user.username;
+        const token = response.data.user.token; // Получаем токен из ответа
+        localStorage.setItem('token', token); // Сохраняем токен в localStorage
+        localStorage.setItem('username', username); 
         window.location.href = "/catolog.html";
       } else {
         console.log("Unexpected status code:", response.status);
