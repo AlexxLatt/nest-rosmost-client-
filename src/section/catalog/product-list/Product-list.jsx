@@ -6,6 +6,7 @@ function ProductList (props){
 		return(
 				<ProductListItem
 				key={id}
+				id = {id}
 				{...itemProps}/>
 		)
 	})

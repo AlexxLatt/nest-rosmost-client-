@@ -15,8 +15,24 @@ class Filter extends Component {
     this.state = {
       term: '',
       country: '',
-      isDropdownOpen: false // Добавляем состояние для отслеживания состояния выпадающего списка
+      isDropdownOpen: false
+     
     };
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleClickOutside, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutside, true);
+  }
+
+  handleClickOutside = (event) => {
+    const { isDropdownOpen } = this.state;
+    if (isDropdownOpen && this.dropdownRef && !this.dropdownRef.contains(event.target)) {
+      this.setState({ isDropdownOpen: false });
+    }
   }
 
   onUpdateSearch = (e) => {
@@ -31,7 +47,6 @@ class Filter extends Component {
     this.props.onUpdateFilter(country);
   }
 
-  // Метод для переключения состояния выпадающего списка
   toggleDropdown = () => {
     this.setState(prevState => ({
       isDropdownOpen: !prevState.isDropdownOpen
@@ -39,7 +54,7 @@ class Filter extends Component {
   }
 
   render() {
-    const { isDropdownOpen } = this.state; // Достаем состояние из state
+    const { isDropdownOpen } = this.state;
     const animatedComponents = makeAnimated();
     const options = [
       { value: 'Usa', label: 'Usa' },
@@ -50,7 +65,10 @@ class Filter extends Component {
       { value: 'India', label: 'India' },
       { value: 'All', label: 'All' }
     ];
-    const username = localStorage.getItem('username');
+    let username = localStorage.getItem('username');
+    if (username.length > 5) {
+      username = username.slice(0, 5) + '...';
+    }
 
     return (
       <div className="Filter">
@@ -81,9 +99,8 @@ class Filter extends Component {
                 <span className='Filter__mainWrapper__profileWrapper__clickArea__name'>{username} ⮟ </span>
                 <img className='Filter__mainWrapper__profileWrapper__clickArea__img' src={iconUser} alt="упс" />
               </div>
-              {/* Отображение выпадающего списка при открытии */}
               {isDropdownOpen && (
-                <div className="dropdown-menu">
+                <div className="dropdown-menu" ref={(node) => { this.dropdownRef = node; }}>
                   <ul>
                     <li className="dropdown-menu__item"><img src={iconBasket} alt="упс..." /><div>Корзина</div></li>
                     <li className="dropdown-menu__item"><img src={iconProfile} alt="упс..." /><div>Профиль</div></li>

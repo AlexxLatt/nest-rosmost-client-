@@ -71,24 +71,30 @@
 	position: absolute;
 	z-index: 10;
 	background-color: white;
-	border: 1px solid $main-color;
+	border: 1px solid black;
+	border-color: hsl(0, 0%, 80%);
 	border-radius: 10px;
 	width: 164px;
-	height: 150px;
+	height: 175px;
 	transition: all 0.3s;
 	align-items:center;
 	&__item{
 		list-style-type: none;
+		border-radius: 10px;
 		display: flex;
 		justify-content: space-between;
 		cursor: pointer;
-		margin-top: 10px;
+		padding-top: 10px;
+		padding-bottom: 10px;
 		img{
-			padding-left: 34px;
+			padding-left: 33px;
 		}
 		div{
-			width: 95px;
+			width: 102px;
 			font-weight: bold;
 		}
+	}
+	&__item:hover{
+		background-color: #deebff;
 	}
 }
