@@ -9,12 +9,13 @@ class StarRating extends Component {
   }
 
 
+
   renderStars = () => {
 	const {initialRating} = this.props;
     const stars = [];
     for (let i = 1; i <=initialRating; i++) {
       stars.push(
-        <span>
+        <span key={i} >
           <img src={miniStarActive} alt="упс..." />
         </span>
       );

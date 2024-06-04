@@ -11,19 +11,21 @@ class ProductListItem extends Component {
     super(props);
     this.state = {
       isProductOpen: false,
+      isProductInBasket: false, 
       currentProduct: {},
       selectedRating: null, // Добавлено состояние для хранения выбранного рейтинга
-      reviews: [] // Правильное написание 'reviews'
+      reviews: [], // Правильное написание 'reviews'
+      basket: {}
     };
   }
 
   handleClick = () => {
     const { id } = this.props;
-    this.openProduct();
+    this.toggleOpenProduct();
     this.findOneProduct(id);
   };
 
-  openProduct = () => {
+  toggleOpenProduct = () => {
     document.body.style.overflow = !this.state.isProductOpen ? 'hidden' : '';
     this.setState((prevState) => ({
       isProductOpen: !prevState.isProductOpen
@@ -81,12 +83,27 @@ class ProductListItem extends Component {
     }
   };
 
+  addProductToBasket = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`http://localhost:3000/basket/${id}`, {}, {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
+      if (response.status === 200 || response.status === 201) {
+        const basket = response.data.basket;
+        console.log(basket);
+        this.setState({ basket: basket });
+        this.toggleOpenProduct();
+      } else {
+        console.log('Unexpected status code:', response.status);
+      }
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
 
-  addProductToBasket = async()=>{
-
-     
-
-  }
   render() {
     const { isProductOpen, currentProduct, reviews } = this.state;
     const { img, title, country, cost } = this.props;
@@ -94,7 +111,7 @@ class ProductListItem extends Component {
     return (
       <div className="productListItem">
         <div className="productListItem__wrapper">
-          <img className="productListItem__wrapper__img" src={productImg} alt="упс..." />
+          <img className="productListItem__wrapper__img" src={img || productImg} alt="упс..." />
           <div className="productListItem__wrapper__title">{title}</div>
           <div className="productListItem__wrapper__country">{country}</div>
           <div className="productListItem__wrapper__cost">{cost}$</div>
@@ -104,9 +121,9 @@ class ProductListItem extends Component {
         </div>
 
         {isProductOpen && (
-          <div className={`productMenuBackground`} onClick={this.openProduct}>
+          <div className={`productMenuBackground`} onClick={this.toggleOpenProduct}>
             <div className="productMenu" onClick={(e) => e.stopPropagation()}>
-              <div onClick={this.openProduct} className="productMenu__close">
+              <div onClick={this.toggleOpenProduct} className="productMenu__close">
                 ×
               </div>
               <div className="productMenu__textWrapper">
@@ -115,10 +132,12 @@ class ProductListItem extends Component {
                   Перевозка: [{currentProduct.tags && currentProduct.tags[0]}, {currentProduct.tags && currentProduct.tags[1]}]
                 </div>
                 <div className="productMenu__textWrapper__cost">{currentProduct.cost}$</div>
-                <button onClick={this.addProductToBasket} className="productMenu__textWrapper__btn">Добавить в корзину</button>
+                <button onClick={() => this.addProductToBasket(currentProduct.id)} className="productMenu__textWrapper__btn">
+                  Добавить в корзину
+                </button>
               </div>
               <div className="productMenu__imgWrapper">
-                <img className="productMenu__imgWrapper__img" src="" alt="упс..." />
+                <img className="productMenu__imgWrapper__img" src={img || productImg} alt="упс..." />
               </div>
               <div className="productMenu__descr">{currentProduct.desc}</div>
               <div className="productMenu__reviews">
@@ -135,7 +154,7 @@ class ProductListItem extends Component {
                         </div>
                         <div className="productMenu__reviews__item__title">{review.title}</div>
                         <div className="productMenu__reviews__item__text">{review.description}</div>
-                        {/* <div className="productMenu__reviews__item__likeWrapper">
+                        <div className="productMenu__reviews__item__likeWrapper">
                           <img 
                             className='productMenu__reviews__item__likeWrapper__btn' 
                             onClick={() => this.likeReview(review.slug)} 
@@ -143,7 +162,7 @@ class ProductListItem extends Component {
                             alt="упс" 
                           />
                           <div className="productMenu__reviews__item__likeWrapper__like">{review.favoritesCount}</div>
-                        </div> */}
+                        </div>
                       </div>
                     ))}
                 </div>
@@ -154,6 +173,6 @@ class ProductListItem extends Component {
       </div>
     );
   }
-}
+} 
 
 export default ProductListItem;

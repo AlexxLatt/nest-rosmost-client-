@@ -12,6 +12,7 @@ class Catalog extends Component {
       data: [],
       term: '',
       country: '',
+      basket: {}
     };
   }
 
@@ -20,6 +21,29 @@ class Catalog extends Component {
   async componentDidMount() {
     await this.allProducts();
   }
+
+   createBasket = async(id)=>{
+
+      try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`http://localhost:3000/basket`, {}, {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
+      if (response.status === 200 || response.status === 201) {
+        const basket = response.data.basket;
+        console.log(basket);
+        this.setState({basket: basket});
+      } else {
+        console.log('Unexpected status code:', response.status);
+      }
+    } catch (error) {
+      console.log('Error:', error);
+    }
+
+  }
+
 
   allProducts = async () => {
     try {
