@@ -85,9 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   transition: opacity 1.3s ease-in-out;
-
   overflow: hidden;
 }
 
@@ -185,7 +183,7 @@
     }
 
     &__list {
-      max-height: 250px;
+      max-height: 310px;
       overflow-y: auto;
     }
 
@@ -232,4 +230,62 @@
 }
 .star-rating{
   display: inline;
+}
+.noticeBasketInProduct{
+  background-color: rgba(0, 0, 0, 0.5); // Прозрачно-серый фон
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  &__window{
+    background-color:white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+    border: 1px solid black;
+    &__close{
+      width: 18px;
+      height: 18px;
+      font-size: 27px;
+      line-height: 19px;
+      margin-top: 10px;
+      margin-left: 92%;
+      cursor: pointer;
+    }
+    &__icon{
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+    &__text{
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+      font-style: 20px;
+      text-transform: uppercase;
+    }
+    &__btn{
+      border-radius:10px;
+      border: 1px solid $main-color;
+      color: white;
+      background-color:$main-color;
+      padding: 10px 10px 10px 10px;
+      text-transform: uppercase;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      transition: all 0.3s ease-in-out;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    &__btn:hover{
+      color: $main-color;
+      background-color:white;
+    }
+
+  }
 }

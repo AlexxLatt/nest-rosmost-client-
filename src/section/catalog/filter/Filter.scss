@@ -53,6 +53,7 @@
 		&__profileWrapper{
 			&__clickArea{
 				padding-left: 27px;
+				cursor: pointer;
 				display: grid;
 				grid-template-columns: 96px 50px;
 				&__name{

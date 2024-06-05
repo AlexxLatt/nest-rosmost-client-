@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import './Product-list-item.scss';
 import productImg from '../../../img/placeholder.jpg';
 import likeNoneActive from "../../../icons/likeNoneActive.png";
+import success from "../../../icons/success.png";
 import axios from 'axios';
 import StarRating from './Star-rating'; // Импорт компонента StarRating
 import StarFilter from './Star-filrer'; // Импорт компонента StarFilter
-
+import Basket from '../basket/Basket';
 class ProductListItem extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +16,8 @@ class ProductListItem extends Component {
       currentProduct: {},
       selectedRating: null, // Добавлено состояние для хранения выбранного рейтинга
       reviews: [], // Правильное написание 'reviews'
-      basket: {}
+      basket: {},
+      isBasketOpen: false
     };
   }
 
@@ -25,12 +27,20 @@ class ProductListItem extends Component {
     this.findOneProduct(id);
   };
 
-  toggleOpenProduct = () => {
+toggleOpenProduct = () => {
     document.body.style.overflow = !this.state.isProductOpen ? 'hidden' : '';
     this.setState((prevState) => ({
-      isProductOpen: !prevState.isProductOpen
+        isProductOpen: !prevState.isProductOpen // исправлено isProductInBasket на isProductOpen
     }));
-  };
+};
+
+
+  toggleProductInBasket = ()=>{
+    document.body.style.overflow = !this.state.isProductOpen ? 'hidden' : '';
+    this.setState((prevState) => ({
+      isProductInBasket: !prevState.isProductInBasket
+    }));
+  }
 
   findOneProduct = async (id) => {
     try {
@@ -83,29 +93,64 @@ class ProductListItem extends Component {
     }
   };
 
-  addProductToBasket = async (id) => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`http://localhost:3000/basket/${id}`, {}, {
-        headers: {
-          Authorization: `Token ${token}`
-        }
-      });
-      if (response.status === 200 || response.status === 201) {
-        const basket = response.data.basket;
-        console.log(basket);
-        this.setState({ basket: basket });
-        this.toggleOpenProduct();
-      } else {
-        console.log('Unexpected status code:', response.status);
-      }
-    } catch (error) {
-      console.log('Error:', error);
+  fetchProducts = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/products');
+    if (response.status === 200 || response.status === 201) {
+      const products = response.data.products;
+      // Обновите состояние вашего компонента с новым списком продуктов
+      // this.setState({ products: products });
+    } else {
+      console.log('Unexpected status code:', response.status);
     }
-  };
+  } catch (error) {
+    console.log('Error:', error);
+  }
+};
+
+
+// В вашем методе addProductToBasket добавьте вызов метода для обновления списка всех продуктов
+addProductToBasket = async (id) => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.post(`http://localhost:3000/basket/${id}`, {}, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    });
+    if (response.status === 200 || response.status === 201) {
+      const basket = response.data.basket;
+      console.log(basket);
+      this.setState({ basket: basket });
+      this.toggleOpenProduct();
+      this.toggleProductInBasket();
+
+      // После успешного добавления продукта в корзину, обновите список всех продуктов
+      await this.fetchProducts(); // Загрузите список всех продуктов снова
+    } else {
+      console.log('Unexpected status code:', response.status);
+    }
+  } catch (error) {
+    console.log('Error:', error);
+  }
+};
+
+
+
+  toggleBasket = () =>{
+
+    this.setState((prevState)=>({
+      isBasketOpen : !prevState.isBasketOpen
+    }));
+
+  } 
+  handleBasket = ()=>{
+    this.toggleBasket();
+    this.toggleProductInBasket();
+  }
 
   render() {
-    const { isProductOpen, currentProduct, reviews } = this.state;
+    const { isProductOpen, currentProduct, reviews, isProductInBasket, isBasketOpen } = this.state;
     const { img, title, country, cost } = this.props;
 
     return (
@@ -139,7 +184,7 @@ class ProductListItem extends Component {
               <div className="productMenu__imgWrapper">
                 <img className="productMenu__imgWrapper__img" src={img || productImg} alt="упс..." />
               </div>
-              <div className="productMenu__descr">{currentProduct.desc}</div>
+              <div className="productMenu__descr">{currentProduct.description}</div>
               <div className="productMenu__reviews">
                 <h3>Отзывы: 
                   <StarFilter id={this.props.id} onRatingSelect={this.handleRatingSelect} onChangeStateRating={this.handleStateRating} />
@@ -170,6 +215,18 @@ class ProductListItem extends Component {
             </div>
           </div>
         )}
+        {isProductInBasket&&(
+          <div className="noticeBasketInProduct">
+            <div className="noticeBasketInProduct__window">
+                <div onClick={this.toggleProductInBasket} className="noticeBasketInProduct__window__close">×</div>
+                <img className="noticeBasketInProduct__window__icon" src={success} alt="упс" />
+                <div className="noticeBasketInProduct__window__text">Продукт добавлен в вашу корзину</div>
+                <button onClick={this.handleBasket} className="noticeBasketInProduct__window__btn">Перейти в корзину</button>
+            </div>
+          </div>
+        )}
+        {isBasketOpen&&<Basket></Basket>}
+
       </div>
     );
   }

@@ -103,8 +103,8 @@ class Filter extends Component {
                 <div className="dropdown-menu" ref={(node) => { this.dropdownRef = node; }}>
                   <ul>
                     <li className="dropdown-menu__item"><img src={iconBasket} alt="упс..." /><div>Корзина</div></li>
-                    <li className="dropdown-menu__item"><img src={iconProfile} alt="упс..." /><div>Профиль</div></li>
                     <li className="dropdown-menu__item"><img src={iconPurshase} alt="упс..." /><div>Покупки</div></li>
+                    <li className="dropdown-menu__item"><img src={iconProfile} alt="упс..." /><div>Профиль</div></li>
                     <li className="dropdown-menu__item"><img src={iconLogout} alt="упс..." /><div>Выход</div></li>
                   </ul>
                 </div>
