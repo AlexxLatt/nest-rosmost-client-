@@ -8,6 +8,7 @@ import iconPurshase from "../../../icons/coin.png";
 import iconLogout from "../../../icons/logout.png";
 import makeAnimated from 'react-select/animated';
 import Select from "react-select";
+import Basket from '../basket/Basket';
 
 class Filter extends Component {
   constructor(props) {
@@ -15,10 +16,19 @@ class Filter extends Component {
     this.state = {
       term: '',
       country: '',
-      isDropdownOpen: false
+      isDropdownOpen: false, 
+      isBasketOpen: false
      
     };
   }
+
+  toggleBasket = () =>{
+
+    this.setState((prevState)=>({
+      isBasketOpen : !prevState.isBasketOpen
+    }));
+
+  } 
 
   componentDidMount() {
     document.addEventListener('click', this.handleClickOutside, true);
@@ -47,6 +57,17 @@ class Filter extends Component {
     this.props.onUpdateFilter(country);
   }
 
+  exitInCatalog = () => {
+    localStorage.clear();
+    try{
+      window.location.href = "http://localhost:5173";
+    }catch(error) {
+    console.log('Error:', error);
+  }
+   
+}
+
+
   toggleDropdown = () => {
     this.setState(prevState => ({
       isDropdownOpen: !prevState.isDropdownOpen
@@ -54,7 +75,7 @@ class Filter extends Component {
   }
 
   render() {
-    const { isDropdownOpen } = this.state;
+    const { isDropdownOpen , isBasketOpen } = this.state;
     const animatedComponents = makeAnimated();
     const options = [
       { value: 'Usa', label: 'Usa' },
@@ -102,13 +123,14 @@ class Filter extends Component {
               {isDropdownOpen && (
                 <div className="dropdown-menu" ref={(node) => { this.dropdownRef = node; }}>
                   <ul>
-                    <li className="dropdown-menu__item"><img src={iconBasket} alt="упс..." /><div>Корзина</div></li>
+                    <li className="dropdown-menu__item" onClick={this.toggleBasket}><img src={iconBasket} alt="упс..." /><div>Корзина</div></li>
                     <li className="dropdown-menu__item"><img src={iconPurshase} alt="упс..." /><div>Покупки</div></li>
                     <li className="dropdown-menu__item"><img src={iconProfile} alt="упс..." /><div>Профиль</div></li>
-                    <li className="dropdown-menu__item"><img src={iconLogout} alt="упс..." /><div>Выход</div></li>
+                    <li className="dropdown-menu__item"><img src={iconLogout} onClick={this.exitInCatalog} alt="упс..." /><div>Выход</div></li>
                   </ul>
                 </div>
               )}
+              {isBasketOpen&& <Basket></Basket>}
             </div>
           </div>
         </div>

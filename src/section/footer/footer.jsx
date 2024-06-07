@@ -28,12 +28,12 @@ function Footer()  {
                     </div>
                 </nav>
                 <nav aria-label="Контакты" >
-                    <div className="footer__wrapper__item">
+                    <div className="footer__wrapper__item" id="contacts">
                         <div className="footer__wrapper__title">Контакты</div>
                         <ul className="footer__wrapper__list">
-                            <li  aria-label="телефон"className="tel"><a href="#">+7 (900) 228-00-97</a></li>
-                            <li aria-label="адрес" className="adres"> <a href="#">Москва, Ленинградский проспект, д. 37, корп. 3</a></li>
-                            <li aria-label="email" className="email"><a href="#">info@rosmost.ru</a></li>
+                            <li  aria-label="телефон"className="tel"><div href="#">+7 (900) 228-00-97</div></li>
+                            <li aria-label="адрес" className="adres"><div href="#">Москва, Ленинградский проспект, д. 37, корп. 3</div></li>
+                            <li aria-label="email" className="email"><div href="#">info@rosmost.ru</div></li>
                         </ul>
                     </div>
                 </nav>

@@ -9,7 +9,7 @@ function PlatformProducts()  {
 
 	  <section className="platformProducts">
         <div className="container">
-            <h2 className="platformProducts__title">Продукты платформы</h2>
+            <h2 className="platformProducts__title" id="product">Продукты платформы</h2>
             <div className="platformProducts__wrapper">
                 <div className="platformProducts__wrapper__item">
                     <img src={iconProduct_1} alt="упс..." className="platformProducts__wrapper__item__icon"/>

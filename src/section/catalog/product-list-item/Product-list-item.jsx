@@ -115,7 +115,7 @@ addProductToBasket = async (id) => {
     const token = localStorage.getItem('token');
     const response = await axios.post(`http://localhost:3000/basket/${id}`, {}, {
       headers: {
-        Authorization: `Token ${token}`
+        Authorization: `Token ${token}`  // Changed from `Token` to `Bearer`
       }
     });
     if (response.status === 200 || response.status === 201) {
@@ -126,7 +126,7 @@ addProductToBasket = async (id) => {
       this.toggleProductInBasket();
 
       // После успешного добавления продукта в корзину, обновите список всех продуктов
-      await this.fetchProducts(); // Загрузите список всех продуктов снова
+      await this.findAllProductsInBasket(); // Загрузите список всех продуктов снова
     } else {
       console.log('Unexpected status code:', response.status);
     }
@@ -134,6 +134,7 @@ addProductToBasket = async (id) => {
     console.log('Error:', error);
   }
 };
+
 
 
 

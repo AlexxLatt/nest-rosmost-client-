@@ -9,13 +9,13 @@ function FirstWindow()  {
 	   <section className="firstWindow">
         <div className="container">
  
-            <div className="firstWindow__main">
+            <div className="firstWindow__main" id='main'>
                 <h1 className="firstWindow__main__title">Цифровая платформа<br/> для грузоперевозок</h1>
                 <h2 className="firstWindow__main__subTitle">Экосистема сервисов для транспортной логистики Транспортные тендеры | Спот-аукционы | TMS | Трекинг грузов
                 </h2>
             </div>
 
-            <div className="firstWindow__infWrapper">
+            <div className="firstWindow__infWrapper " id='adventages'>
                 <div className="firstWindow__infWrapper__item">
                     <img src={handshake} alt="упс..." className="firstWindow__infWrapper__item__icons"/>
                     <div className="firstWindow__infWrapper__item__text">Более 6 000 перевозчиков уже работают с нами</div>

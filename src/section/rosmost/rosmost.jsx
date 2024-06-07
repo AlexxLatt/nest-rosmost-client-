@@ -7,7 +7,7 @@ function Rosmost() {
     <section className="rosmost">
       <div className="container">
         <div className="rosmost__wrapper">
-          <h2 className="rosmost__wrapper__title">Росмост</h2>
+          <h2 className="rosmost__wrapper__title" id='rosmost'>Росмост</h2>
           <button className="rosmost__wrapper__button btn">Скачать презентацию</button>
           <div className="rosmost__wrapper__desc">Это цифровая платформа для грузоперевозок. Пользователям доступны продукты и сервисы для автоматизации закупки и исполнения перевозок: транспортные тендеры, спот-аукционы, TMS и трекинг. Цифровые продукты Росмост объединены в экосистему, интегрированы с ИТ-системами грузоотправителей, позволяют оптимизировать рутинные процессы и значительно снизить расходы на транспортную логистику.</div>
         </div>

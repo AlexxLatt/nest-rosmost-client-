@@ -17,11 +17,11 @@ function Header(props) {
 
                     <nav aria-label="Главное меню">
                         <ul className="header__navWrapper">
-                            <li className="header__navWrapper-item"><a href="#" className="link">Главная</a></li>
-                            <li className="header__navWrapper-item"><a href="#" className="link">Продукты</a></li>
-                            <li className="header__navWrapper-item"><a href="#" className="link">Преимущества</a></li>
-                            <li className="header__navWrapper-item"><a href="#" className="link">РОСМОСТ</a></li>
-                            <li className="header__navWrapper-item"><a href="#" className="link">Контакты</a></li>
+                            <li className="header__navWrapper-item"><a href="#main" className="link">Главная</a></li>
+                            <li className="header__navWrapper-item"><a href="#product" className="link">Продукты</a></li>
+                            <li className="header__navWrapper-item"><a href="#adventages" className="link">Преимущества</a></li>
+                            <li className="header__navWrapper-item"><a href="#rosmost" className="link">РОСМОСТ</a></li>
+                            <li className="header__navWrapper-item"><a href="#contacts" className="link">Контакты</a></li>
                         </ul>
                     </nav>
 

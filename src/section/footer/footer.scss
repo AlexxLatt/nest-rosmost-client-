@@ -25,6 +25,9 @@
 					
 					color:#737373;
 				}
+				a:hover{
+					text-decoration: underline;
+				}
 			}
 		}
 		
@@ -45,7 +48,7 @@
 .tel::before{
 	display: inline-block;
 	content:'';
-	background: url('../icons/tel.png') no-repeat 50%/cover;	
+	background: url('../../icons/tel.png') no-repeat 50%/cover;	
 	width: 20px;
 	height: 20px;
 	margin-right: 20px;
@@ -54,7 +57,7 @@
 
 	display: inline-block;
 	content:'';
-	background: url('../icons/adres.png') no-repeat 50%/cover;	
+	background: url('../../icons/adres.png') no-repeat 50%/cover;	
 	width: 20px;
 	height: 25px;
 	margin-right: 20px;
@@ -62,9 +65,18 @@
 .email::before{
 	display: inline-block;
 	content:'';
-	background: url('../icons/email.png') no-repeat 50%/cover;	
+	background: url('../../icons/email.png') no-repeat 50%/cover;	
 	width: 20px;
 	height: 23px;
 	margin-right: 20px;
 
+}
+.email:hover{
+	text-decoration: underline;
+}
+.adres:hover{
+	text-decoration: underline;
+}
+.tel:hover{
+	text-decoration: underline;
 }
