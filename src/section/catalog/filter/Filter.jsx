@@ -9,6 +9,8 @@ import iconLogout from "../../../icons/logout.png";
 import makeAnimated from 'react-select/animated';
 import Select from "react-select";
 import Basket from '../basket/Basket';
+import Profile from '../profile/Profile';
+import Purchases from '../purchases/Purchases';
 
 class Filter extends Component {
   constructor(props) {
@@ -17,8 +19,9 @@ class Filter extends Component {
       term: '',
       country: '',
       isDropdownOpen: false, 
-      isBasketOpen: false
-     
+      isBasketOpen: false,
+      isProfileOpen: false,
+      isPurchasesOpen : false
     };
   }
 
@@ -27,6 +30,15 @@ class Filter extends Component {
     this.setState((prevState)=>({
       isBasketOpen : !prevState.isBasketOpen
     }));
+    document.body.style.overflow = !this.state.isBasketOpen ? 'hidden' : '';
+  } 
+  
+  toggleProfile = () =>{
+
+    this.setState((prevState)=>({
+      isProfileOpen : !prevState.isProfileOpen
+    }));
+    document.body.style.overflow = !this.state.isProfileOpen ? 'hidden' : '';
 
   } 
 
@@ -66,16 +78,23 @@ class Filter extends Component {
   }
    
 }
+  togglePurchases = ()=>{
+    this.setState(prevState => ({
+      isPurchasesOpen: !prevState.isPurchasesOpen
+    }));
 
+    document.body.style.overflow = !this.state.isPurchasesOpen ? 'hidden' : '';
+  }
 
   toggleDropdown = () => {
     this.setState(prevState => ({
       isDropdownOpen: !prevState.isDropdownOpen
     }));
+    
   }
 
   render() {
-    const { isDropdownOpen , isBasketOpen } = this.state;
+    const { isDropdownOpen , isBasketOpen, isProfileOpen, isPurchasesOpen } = this.state;
     const animatedComponents = makeAnimated();
     const options = [
       { value: 'Usa', label: 'Usa' },
@@ -124,13 +143,15 @@ class Filter extends Component {
                 <div className="dropdown-menu" ref={(node) => { this.dropdownRef = node; }}>
                   <ul>
                     <li className="dropdown-menu__item" onClick={this.toggleBasket}><img src={iconBasket} alt="упс..." /><div>Корзина</div></li>
-                    <li className="dropdown-menu__item"><img src={iconPurshase} alt="упс..." /><div>Покупки</div></li>
-                    <li className="dropdown-menu__item"><img src={iconProfile} alt="упс..." /><div>Профиль</div></li>
+                    <li className="dropdown-menu__item" onClick={this.togglePurchases}> <img src={iconPurshase} alt="упс..." /> <div>Покупки</div></li>
+                    <li className="dropdown-menu__item" onClick={this.toggleProfile}><img src={iconProfile} alt="упс..." /><div>Профиль</div></li>
                     <li className="dropdown-menu__item"><img src={iconLogout} onClick={this.exitInCatalog} alt="упс..." /><div>Выход</div></li>
                   </ul>
                 </div>
               )}
               {isBasketOpen&& <Basket></Basket>}
+              {isProfileOpen &&<Profile></Profile> }
+              {isPurchasesOpen && <Purchases></Purchases>}
             </div>
           </div>
         </div>

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Filter from "./section/catalog/filter/Filter";
 import ProductList from "./section/catalog/product-list/Product-list";
 import UserContext from "./App";
-
 import axios from 'axios';
 
 class Catalog extends Component {
@@ -22,9 +21,8 @@ class Catalog extends Component {
     await this.allProducts();
   }
 
-   createBasket = async(id)=>{
-
-      try {
+  createBasket = async (id) => {
+    try {
       const token = localStorage.getItem('token');
       const response = await axios.post(`http://localhost:3000/basket`, {}, {
         headers: {
@@ -34,16 +32,14 @@ class Catalog extends Component {
       if (response.status === 200 || response.status === 201) {
         const basket = response.data.basket;
         console.log(basket);
-        this.setState({basket: basket});
+        this.setState({ basket: basket });
       } else {
         console.log('Unexpected status code:', response.status);
       }
     } catch (error) {
       console.log('Error:', error);
     }
-
   }
-
 
   allProducts = async () => {
     try {
@@ -56,7 +52,8 @@ class Catalog extends Component {
       if (response.status === 200) {
         console.log("Data fetched successfully");
         console.log(response.data.products);
-        const data = response.data.products;
+        // Фильтруем продукты с cloned: true
+        const data = response.data.products.filter(product => !product.cloned);
         this.setState({ data: data });
       } else {
         console.log("Unexpected status code:", response.status);
