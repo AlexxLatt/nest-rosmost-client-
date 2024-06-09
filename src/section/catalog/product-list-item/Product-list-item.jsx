@@ -4,8 +4,6 @@ import productImg from '../../../img/placeholder.jpg';
 import likeNoneActive from "../../../icons/likeNoneActive.png";
 import success from "../../../icons/success.png";
 import axios from 'axios';
-import StarRating from './Star-rating'; // Импорт компонента StarRating
-import StarFilter from './Star-filrer'; // Импорт компонента StarFilter
 import Basket from '../basket/Basket';
 class ProductListItem extends Component {
   constructor(props) {
@@ -186,33 +184,6 @@ addProductToBasket = async (id) => {
                 <img className="productMenu__imgWrapper__img" src={img || productImg} alt="упс..." />
               </div>
               <div className="productMenu__descr">{currentProduct.description}</div>
-              <div className="productMenu__reviews">
-                <h3>Отзывы: 
-                  <StarFilter id={this.props.id} onRatingSelect={this.handleRatingSelect} onChangeStateRating={this.handleStateRating} />
-                </h3>
-                <div className="productMenu__reviews__list">
-                  {reviews &&
-                    reviews.map((review) => (
-                      <div key={review.id} className="productMenu__reviews__item">
-                        <div className="productMenu__reviews__item__author">{review.author.username}</div>
-                        <div className="productMenu__reviews__item__rating">
-                          <StarRating initialRating={review.rating} />
-                        </div>
-                        <div className="productMenu__reviews__item__title">{review.title}</div>
-                        <div className="productMenu__reviews__item__text">{review.description}</div>
-                        <div className="productMenu__reviews__item__likeWrapper">
-                          <img 
-                            className='productMenu__reviews__item__likeWrapper__btn' 
-                            onClick={() => this.likeReview(review.slug)} 
-                            src={likeNoneActive} 
-                            alt="упс" 
-                          />
-                          <div className="productMenu__reviews__item__likeWrapper__like">{review.favoritesCount}</div>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </div>
             </div>
           </div>
         )}

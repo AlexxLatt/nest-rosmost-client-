@@ -18,29 +18,36 @@ class Filter extends Component {
     this.state = {
       term: '',
       country: '',
-      isDropdownOpen: false, 
+      isDropdownOpen: false,
       isBasketOpen: false,
       isProfileOpen: false,
-      isPurchasesOpen : false
+      isPurchasesOpen: false
     };
   }
 
-  toggleBasket = () =>{
+  toggleBasket = () => {
+    const { isBasketOpen } = this.state;
+    this.setState({
+      isBasketOpen: !isBasketOpen
+    });
+    document.body.style.overflow = !isBasketOpen ? 'hidden' : '';
+  }
 
-    this.setState((prevState)=>({
-      isBasketOpen : !prevState.isBasketOpen
-    }));
-    document.body.style.overflow = !this.state.isBasketOpen ? 'hidden' : '';
-  } 
-  
-  toggleProfile = () =>{
+  toggleProfile = () => {
+    const { isProfileOpen } = this.state;
+    this.setState({
+      isProfileOpen: !isProfileOpen
+    });
+    document.body.style.overflow = !isProfileOpen ? 'hidden' : '';
+  }
 
-    this.setState((prevState)=>({
-      isProfileOpen : !prevState.isProfileOpen
-    }));
-    document.body.style.overflow = !this.state.isProfileOpen ? 'hidden' : '';
-
-  } 
+  togglePurchases = () => {
+    const { isPurchasesOpen } = this.state;
+    this.setState({
+      isPurchasesOpen: !isPurchasesOpen
+    });
+    document.body.style.overflow = !isPurchasesOpen ? 'hidden' : '';
+  }
 
   componentDidMount() {
     document.addEventListener('click', this.handleClickOutside, true);
@@ -71,38 +78,32 @@ class Filter extends Component {
 
   exitInCatalog = () => {
     localStorage.clear();
-    try{
+    try {
       window.location.href = "http://localhost:5173";
-    }catch(error) {
-    console.log('Error:', error);
-  }
-   
-}
-  togglePurchases = ()=>{
-    this.setState(prevState => ({
-      isPurchasesOpen: !prevState.isPurchasesOpen
-    }));
+    } catch (error) {
+      console.log('Error:', error);
+    }
 
-    document.body.style.overflow = !this.state.isPurchasesOpen ? 'hidden' : '';
   }
 
   toggleDropdown = () => {
-    this.setState(prevState => ({
-      isDropdownOpen: !prevState.isDropdownOpen
-    }));
+    const { isDropdownOpen } = this.state;
+    this.setState({
+      isDropdownOpen: !isDropdownOpen
+    });
     
   }
 
   render() {
-    const { isDropdownOpen , isBasketOpen, isProfileOpen, isPurchasesOpen } = this.state;
+    const { isDropdownOpen, isBasketOpen, isProfileOpen, isPurchasesOpen } = this.state;
     const animatedComponents = makeAnimated();
     const options = [
-      { value: 'Usa', label: 'Usa' },
-      { value: 'Russia', label: 'Russia' },
-      { value: 'Brazil', label: 'Brazil' },
-      { value: 'Canada', label: 'Canada' },
+      { value: 'Australia', label: 'Australia' },
+      { value: 'Japan', label: 'Japan' },
       { value: 'South Korea', label: 'South Korea' },
-      { value: 'India', label: 'India' },
+      { value: 'Brazilia', label: 'Brazilia' },
+      { value: 'USA', label: 'USA' },
+      { value: 'Canada', label: 'Canada' },
       { value: 'All', label: 'All' }
     ];
     let username = localStorage.getItem('username');
@@ -149,8 +150,8 @@ class Filter extends Component {
                   </ul>
                 </div>
               )}
-              {isBasketOpen&& <Basket></Basket>}
-              {isProfileOpen &&<Profile></Profile> }
+              {isBasketOpen && <Basket></Basket>}
+              {isProfileOpen && <Profile></Profile>}
               {isPurchasesOpen && <Purchases></Purchases>}
             </div>
           </div>
